@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>Course Management and Enrollment System | Student Home</title>
 
@@ -48,22 +48,36 @@
 
             #line1 {
                 background-color: #4582ec;
-                height: 50px;
+                height: 2vw;
             }
 
+
+            /*pagelayout (Grids)*/
+            #mainGridWrapper {
+                display: grid;
+                
+                grid-template-rows: auto auto auto;
+                
+                justify-content: start;
+                column-gap: 3vw;
+                row-gap: 2vw;
+                width: 100vw
+            }
             #studentPersonalCard {
+                grid-column: 1;
+                grid-row: 1 / span 3;
                 left: 2%;
-                width: 51%;
+                aspect-ratio: auto;
             }
-
             /*https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout#:~:text=CSS%20Grid%20Layout%20excels%20at%20dividing%20a%20page,author%20to%20align%20elements%20into%20columns%20and%20rows.*/
             #grid1Wrapper {
                 display: grid;
-                grid-template-columns: 300px auto auto;
+                grid-template-columns: auto auto auto auto;
                 grid-template-rows: auto auto auto auto auto;
                 align-content: center;
                 justify-content: start;
-                column-gap: 30px;
+                column-gap: 2vw;
+                row-gap: 1vw;
             }
             #grid1_sec1 {
                 grid-column: 1;
@@ -97,6 +111,35 @@
                 grid-column: 1;
                 grid-row: 3 / span 3;
             }
+            #coursesCard {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            #programsCard {
+                grid-column: 2;
+                grid-row: 2;
+            }
+            #academHistCard {
+                grid-column: 2;
+                grid-row: 3;
+            }
+
+            #buttonSpacer {
+                display: block
+            }
+
+            /*Content-Responsivness*/
+            .responsiveText {
+                font-size: 1.2vw;
+            }
+            .responsiveTitle {
+                font-size: 2vw;
+            }
+            .responsiveButton {
+                font-size: 1.2vw;
+                width: 20vw;
+                height: 5vw;
+            }
 
         </style>
 
@@ -113,81 +156,132 @@
                 </header>
                 <hr id="line1">
 
-                <div id="studentPersonalCard" class="card text-white bg-success mb-3">
-                    <div class="card-header">
-                        <h4>Personal</h4>
-                    </div>
 
-                    <div class="card-body">
 
-                        <div id="grid1Wrapper">
+                <div id="mainGridWrapper">
 
-                            <div id="grid1_sec1">
-                                <img src="Images/icons8-test-account-80.png" width="150px">
-                            </div>
-                          
-    
-                            <div id="grid1_sec2">
-                                <h6>&lt;Student_Full_Name&gt;</h6>
-                            </div>
-    
-                            <div id="grid1_sec3">
-                                <h6>&lt;Student_ID_Number&gt;</h6>
-                            </div>
-    
-                            
-                            <div id="grid1_sec4">
-                                <h6>Your next enrollment date is:</h6>
-                                <h5>&lt;Enrollment_Date&gt;</h5>
-                            </div>
-
-                            <div id="grid1_sec5">
-                                <h6>Addresses</h6>
-                                <ol>
-                                    <li>123 Parkway Ave NW</li>
-                                </ol>
-                            </div>
-
-                            <div id="grid1_sec6">
-                                <h6>Phone Numbers</h6>
-                                <ol>
-                                    <li>403-555-5555</li>
-                                    <li>587-777-7777</li>
-                                </ol>
-                            </div>
-
-                            <div id="grid1_sec7">
-                                <h6>Email Addresses</h6>
-                                <ol>
-                                    <li>123McDoogle@gmail.com</li>
-                                    <li>m.Doogle@ucalgary.ca</li>
-                                </ol>
-                            </div>
-
-                            <div id="grid1_sec8">
-                                <h5>Bio</h5>
-                                <p>
-                                    Nullam quis risus eget urna mollis ornare vel eu leo. Cum 
-                                    sociis natoque penatibus et magnis dis parturient montes, 
-                                    nascetur ridiculus mus. Nullam id dolor id nibh ultricies 
-                                    vehicula.
-                                </p>
-                            </div>
-                                
-                            
+                    <!--STUDENT PERSONAL SECTION-->
+                    <div id="studentPersonalCard" class="card text-white bg-success mb-3">
+                        <div class="card-header">
+                            <h4 class="responsiveTitle">Personal</h4>
                         </div>
+                        <div class="card-body">
+                            <div id="grid1Wrapper">
     
-                        
-                            
-                        
+                                <div id="grid1_sec1" >
+                                    <img id="profilePic" src="Images/icons8-test-account-80.png" style="width: 10vw; height: auto;">
+                                </div>
+                              
+                                <div id="grid1_sec2" class="responsiveGridCell">
+                                    <h5 id="studentName" class="responsiveText">&lt;Student_Full_Name&gt;</h5>
+                                </div>
+        
+                                <div id="grid1_sec3" class="responsiveGridCell">
+                                    <h5 id="studentID" class="responsiveText">&lt;Student_ID_Number&gt;</h5>
+                                </div>
+        
+                                <div id="grid1_sec4" class="responsiveGridCell">
+                                    <h6 id="enrollLabel" class="responsiveText">Your next enrollment date is:</h6>
+                                    <h6 id="enrollDate" class="responsiveText">&lt;Enrollment_Date&gt;</h6>
+                                </div>
+    
+                                <div id="grid1_sec5" class="responsiveGridCell">
+                                    <h6 id="address" class="responsiveText">Addresses</h6>
+                                    <ol>
+                                        <li class="responsiveText">123 Parkway Ave NW</li>
+                                    </ol>
+                                </div>
+    
+                                <div id="grid1_sec6" class="responsiveGridCell">
+                                    <h6 id="phoneNum" class="responsiveText">Phone Numbers</h6>
+                                    <ol>
+                                        <li class="responsiveText">403-555-5555</li>
+                                        <li class="responsiveText">587-777-7777</li>
+                                    </ol>
+                                </div>
+    
+                                <div id="grid1_sec7" class="responsiveGridCell">
+                                    <h6 id="email" class="responsiveText">Email Addresses</h6>
+                                    <ol>
+                                        <li class="responsiveText">123McDoogle@gmail.com</li>
+                                        <li class="responsiveText">m.Doogle@ucalgary.ca</li>
+                                    </ol>
+                                </div>
+    
+                                <div id="grid1_sec8" class="responsiveGridCell">
+                                    <h5 id="bioLabel" class="responsiveText">Bio</h5>
+                                    <p class="responsiveText">
+                                        Nullam quis risus eget urna mollis ornare vel eu leo. Cum 
+                                        sociis natoque penatibus et magnis dis parturient montes, 
+                                        nascetur ridiculus mus. Nullam id dolor id nibh ultricies 
+                                        vehicula.
+                                    </p>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <!--ENDOF STUDENT PERSONAL SECTION-->
+
+                    <!--COURSES SECTION-->
+                    <div id="coursesCard" class="card text-white bg-info mb-3">
+                        <div class="card-header">
+                            Courses
+                        </div>
+                        <div class="card-body">
+                            <span class="buttonSpacer">
+                                <button class="btn btn-warning responsiveButton">Enrollment</button>
+                            </span>
+                            <span>
+                                <button class="btn btn-warning responsiveButton">Shopping Cart</button>
+                            </span>
+                            <span>
+                                <button class="btn btn-warning responsiveButton">Waitlist</button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--PROGRAMS SECTION-->
+                    <div id="programsCard" class="card text-white bg-info mb-3">
+                        <div class="card-header">
+                            Programs
+                        </div>
+                        <div class="card-body">
+                            <span>
+                                <button class="btn btn-warning responsiveButton">Major Programs</button>
+                            </span>
+                            <span>
+                                <button class="btn btn-warning responsiveButton">Minor Programs</button>
+                            </span>
+                        </div>
                     </div>
 
 
+                    <!--ACADEMHIST SECTION-->
+                    <div id="academHistCard" class="card text-white bg-info mb-3">
+                        <div class="card-header">
+                            Academic History
+                        </div>
+                        <div class="card-body">
+                            <span>
+                                <button class="btn btn-warning responsiveButton">Grades</button>
+                            </span>
+                            <span>
+                                <button class="btn btn-warning responsiveButton">Course Reviews</button>
+                            </span>
+                        </div>
+                    </div>
 
 
                 </div>
-            </div>
-        </div>
+
+
+
+
+
+
+            </div><!--MainContentContainer-->
+        </div><!--MainContentWrapper-->
 
         <footer id="footer">
             <div id="footerContent" class="card text-white bg-primary mb-3">
