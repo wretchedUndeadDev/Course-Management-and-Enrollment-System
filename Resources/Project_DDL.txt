@@ -1,0 +1,473 @@
+CREATE TABLE faculty (
+faculty_name CHAR(25) NOT NULL,
+faculty_information TEXT,
+PRIMARY KEY (faculty_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE major_program (
+parent_faculty CHAR(25) NOT NULL,
+major_name CHAR(25) NOT NULL,
+major_description TEXT,
+time_limit TINYINT,
+num_of_opt_credits TINYINT,
+PRIMARY KEY (parent_faculty, major_name),
+FOREIGN KEY (parent_faculty) REFERENCES faculty(faculty_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE minor_program (
+parent_faculty CHAR(25) NOT NULL,
+minor_name CHAR(25) NOT NULL,
+minor_description TEXT,
+time_limit TINYINT,
+num_of_opt_credits TINYINT,
+PRIMARY KEY (parent_faculty, minor_name)
+FOREIGN KEY (parent_faculty) REFERENCES faculty(faculty_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE concentration (
+major_faculty_name CHAR(25) NOT NULL,
+major_name CHAR(25) NOT NULL,
+concentration_name CHAR(25) NOT NULL,
+concentration_description TEXT,
+PRIMARY KEY (major_faculty_name, major_name, concentration_name),
+FOREIGN KEY (major_faculty_name) REFERENCES major_program(parent_faculty)
+FOREIGN KEY (major_name) REFERENCES major_program(major_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student (
+student_id VARCHAR(15) NOT NULL,
+assigned_enrollment_date DATE,
+Fname CHAR(15),
+Lname CHAR(15),
+primary_faculty_name CHAR(25),
+PRIMARY KEY (student_id),
+FOREIGN KEY (primary_faculty_name) REFERENCES faculty(faculty_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_address(
+student_id VARCHAR(15) NOT NULL,
+address VARCHAR(55) NOT NULL,
+PRIMARY KEY (student_id, address),
+FOREIGN KEY (student_id) REFERENCES student(student_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_phone(
+student_id VARCHAR(15) NOT NULL,
+phone_num BIGINT NOT NULL,
+PRIMARY KEY (student_id, phone_num),
+FOREIGN KEY (student_id) REFERENCES student(student_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_email(
+student_id VARCHAR(15) NOT NULL,
+email VARCHAR(320) NOT NULL,
+PRIMARY KEY (student_id, email),
+FOREIGN KEY (student_id) REFERENCES student(student_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_takes_major_program(
+student_id VARCHAR(15) NOT NULL,
+major_program_faculty CHAR(25) NOT NULL,
+major_program_name CHAR(25) NOT NULL,
+PRIMARY KEY (student_id, major_program_faculty, major_program_name),
+FOREIGN KEY (student_id) REFERENCES student(student_id),
+FOREIGN KEY (major_program_faculty) REFERENCES major_program(parent_faculty),
+FOREIGN KEY (major_program_name) REFERENCES major_program(major_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_takes_minor_program(
+student_id VARCHAR(15) NOT NULL,
+minor_program_faculty CHAR(25) NOT NULL,
+minor_program_name CHAR(25) NOT NULL,
+PRIMARY KEY (student_id, minor_program_faculty, minor_program_name),
+FOREIGN KEY (student_id) REFERENCES student(student_id),
+FOREIGN KEY (minor_program_faculty) REFERENCES minor_program(parent_faculty),
+FOREIGN KEY (minor_program_name) REFERENCES minor_program(minor_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_focuses_concentration(
+student_id VARCHAR(15) NOT NULL,
+program_faculty CHAR(25) NOT NULL,
+program_name CHAR(25) NOT NULL,
+concentration_name CHAR(25) NOT NULL,
+PRIMARKY KEY (student_id, program_faculty, program_name, concentration_name)
+FOREIGN KEY (student_id) REFERENCES student(student_id),
+FOREIGN KEY (program_faculty) REFERENCES concentration(major_faculty_name),
+FOREIGN KEY (program_name) REFERENCES concentration(major_name),
+FOREIGN KEY (concentration_name) REFERENCES concentration(concentration_name)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin(
+admin_id VARCHAR(15) NOT NULL,
+Fname CHAR(15),
+Lname CHAR(15),
+PRIMARY KEY (admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_address(
+admin_id VARCHAR(15) NOT NULL,
+address VARCHAR(55) NOT NULL,
+PRIMARY KEY (admin_id, address),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_phone(
+admin_id VARCHAR(15) NOT NULL,
+phone_num BIGINT NOT NULL,
+PRIMARY KEY (admin_id, phone_num),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_email(
+admin_id VARCHAR(15) NOT NULL,
+email VARCHAR(320) NOT NULL,
+PRIMARY KEY (admin_id, email),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_adds_student(
+student_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (student_id, admin_id),
+FOREIGN KEY (student_id) REFERENCES student(student_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_edits_student(
+student_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (student_id, admin_id),
+FOREIGN KEY (student_id) REFERENCES student(student_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_removes_student(
+student_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (student_id, admin_id),
+FOREIGN KEY (student_id) REFERENCES student(student_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course (
+course_id VARCHAR(15) NOT NULL,
+course_name CHAR(25),
+course_level INT,
+course_description TEXT,
+course_credit TINYINT,
+PRIMARY KEY (course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE term(
+course_id VARCHAR(15) NOT NULL,
+year INT NOT NULL,
+season CHAR(3) NOT NULL,
+PRIMARY KEY (course_id, year, season),
+FOREIGN KEY (course_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_course_taken(
+student_id VARCHAR(15) NOT NULL,
+course_id VARCHAR(15) NOT NULL,
+letter_grade CHAR NOT NULL,
+PRIMARY KEY (student_id, course_id),
+FOREIGN KEY (student_id) REFERNCES student(student_id),
+FOREIGN KEY (course_id) REFERNCES course(course_id),
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_adds_course(
+course_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (course_id, admin_id),
+FOREIGN KEY (course_id) REFERENCES course(course_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_edits_course(
+course_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (course_id, admin_id),
+FOREIGN KEY (course_id) REFERENCES course(course_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_removes_course(
+course_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (course_id, admin_id),
+FOREIGN KEY (course_id) REFERENCES course(course_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course_prereq (
+requiring_course_id VARCHAR(15) NOT NULL,
+course_prereq_id VARCHAR(15) NOT NULL,
+PRIMARY KEY (requiring_course_id, course_prereq_id),
+FOREIGN KEY (requiring_course_id) REFERENCES course(course_id),
+FOREIGN KEY (course_prereq_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course_antireq (
+requiring_course_id VARCHAR(15) NOT NULL,
+course_antireq_id VARCHAR(15) NOT NULL,
+PRIMARY KEY (requiring_course_id, course_antireq_id),
+FOREIGN KEY (requiring_course_id) REFERENCES course(course_id),
+FOREIGN KEY (course_antireq_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE class(
+parent_course_id VARCHAR(15) NOT NULL,
+class_num INT NOT NULL,
+room_num SMALLINT,
+seat_num, SMALLINT,
+waitlist_num SMALLINT,
+start_time TIME,
+end_time TIME,
+class_type CHAR,
+instructor VARCHAR(15) DEFAULT 'n/a',
+ta VARCHAR(15) DEFAULT 'n/a',
+supervisor VARCHAR(15) DEFAULT 'n/a'
+PRIMARY KEY (parent_course_id, class_num),
+FOREIGN KEY (parent_course_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci 
+ENGINE=InnoDB;
+
+CREATE TABLE class_days(
+parent_course_id VARCHAR(15) NOT NULL,
+class_num INT NOT NULL,
+day char(1) NOT NULL,
+PRIMARY KEY (parent_course_id, class_num, day),
+FOREIGN KEY (parent_course_id) REFERENCES class(parent_course_id),
+FOREIGN KEY (class_num) REFERENCES class(class_num)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_adds_class(
+parent_course_id VARCHAR(15) NOT NULL,
+class_num INT NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (parent_course_id, class_num, admin_id),
+FOREIGN KEY (parent_course_id) REFERENCES class(parent_course_id),
+FOREIGN KEY (class_num) REFERENCES class(class_num),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_edits_class(
+parent_course_id VARCHAR(15) NOT NULL,
+class_num INT NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (parent_course_id, class_num, admin_id),
+FOREIGN KEY (parent_course_id) REFERENCES class(parent_course_id),
+FOREIGN KEY (class_num) REFERENCES class(class_num),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_removes_class(
+parent_course_id VARCHAR(15) NOT NULL,
+class_num INT NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARY KEY (parent_course_id, class_num, admin_id),
+FOREIGN KEY (parent_course_id) REFERENCES class(parent_course_id),
+FOREIGN KEY (class_num) REFERENCES class(class_num),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course_restricted_to_major_program(
+major_program_name CHAR(25) NOT NULL,
+major_program_faculty CHAR(25) NOT NULL,
+restricted_course_id VARCHAR(15) NOT NULL,
+PRIMARY KEY (major_program_name, major_program_faculty, restricted_course_id),
+FOREIGN KEY (major_program_name) REFERENCES major_program(major_name),
+FOREIGN KEY (major_program_faculty) REFERENCES major_program(parent_faculty),
+FOREIGN KEY (restricted_course_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course_required_by_major_program(
+major_program_name CHAR(25) NOT NULL,
+major_program_faculty CHAR(25) NOT NULL,
+required_course_id VARCHAR(15) NOT NULL,
+PRIMARY KEY (major_program_name, major_program_faculty, required_course_id),
+FOREIGN KEY (major_program_name) REFERENCES major_program(major_name),
+FOREIGN KEY (major_program_faculty) REFERENCES major_program(parent_faculty),
+FOREIGN KEY (required_course_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course_required_by_minor_program(
+minor_program_name CHAR(25) NOT NULL,
+minor_program_faculty CHAR(25) NOT NULL,
+required_course_id VARCHAR(15) NOT NULL,
+PRIMARY KEY (minor_program_name, minor_program_faculty, required_course_id),
+FOREIGN KEY (minor_program_name) REFERENCES minor_program(minor_name),
+FOREIGN KEY (minor_program_faculty) REFERENCES minor_program(parent_faculty),
+FOREIGN KEY (required_course_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course_required_by_concentration(
+major_program_name CHAR(25) NOT NULL,
+major_program_faculty CHAR(25) NOT NULL,
+concentration_name CHAR(25) NOT NULL,
+required_course_id VARCHAR(15) NOT NULL,
+PRIMARY KEY (major_program_name, major_program_faculty, concentration_name, required_course_id),
+FOREIGN KEY (major_program_name) REFERENCES concentration(major_name),
+FOREIGN KEY (major_program_faculty) REFERENCES concentration(major_faculty_name),
+FOREIGN KEY (concentration_name) REFERENCES concentration(concentration_name),
+FOREIGN KEY (required_course_id) REFERENCES course(course_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_course_class_request(
+requesting_student_id VARCHAR(15) NOT NULL,
+requested_course_id VARCHAR(15) NOT NULL,
+requested_class_num INT NOT NULL,
+PRIMARKY KEY (requesting_student_id, requested_course_id, requested_class),
+FOREIGN KEY (requesting_student_id) REFERENCES student(student_id),
+FOREIGN KEY (requested_course_id) REFERENCES class(parent_course_id),
+FOREIGN KEY (requested_class_num) REFERENCES class(class_num)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_course_class_enroll(
+enrolling_student_id VARCHAR(15) NOT NULL,
+enrolled_course_id VARCHAR(15) NOT NULL,
+enrolled_class_num INT NOT NULL,
+PRIMARKY KEY (enrolling_student_id, enrolled_course_id, enrolled_class_num),
+FOREIGN KEY (enrolling_student_id) REFERENCES student(student_id),
+FOREIGN KEY (enrolled_course_id) REFERENCES class(parent_course_id),
+FOREIGN KEY (enrolled_class_num) REFERENCES class(class_num)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE student_course_class_waitlist(
+waitlisting_student_id VARCHAR(15) NOT NULL,
+waitlisted_course_id VARCHAR(15) NOT NULL,
+waitlisted_class_num INT NOT NULL,
+waitlist_position TINYINT NOT NULL,
+PRIMARKY KEY (waitlisting_student_id, waitlisted_course_id, waitlisted_class_num),
+FOREIGN KEY (waitlisting_student_id) REFERENCES student(student_id),
+FOREIGN KEY (waitlisted_course_id) REFERENCES class(parent_course_id),
+FOREIGN KEY (waitlisted_class_num) REFERENCES class(class_num)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE course_review(
+course_id VARCHAR(15) NOT NULL,
+student_id VARCHAR(15) NOT NULL,
+review_id VARCHAR(15) NOT NULL,
+quality_rating TINYINT,
+difficulty_rating TINYINT,
+content TEXT,
+PRIMARY KEY (course_id, student_id, review_id),
+FOREIGN KEY (course_id) REFERENCES course(course_id),
+FOREIGN KEY (student_id) REFERENCES student(student_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_edits_course_review(
+student_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+course_id VARCHAR(15) NOT NULL,
+review_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARKY KEY (student_id, admin_id, course_id, review_id),
+FOREIGN KEY (student_id) REFERENCES course_review(student_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id),
+FOREIGN KEY (course_id) REFERENCES course_review(course_id),
+FOREIGN KEY (review_id) REFERENCES course_review(review_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
+
+CREATE TABLE admin_removes_course_review(
+student_id VARCHAR(15) NOT NULL,
+admin_id VARCHAR(15) NOT NULL,
+course_id VARCHAR(15) NOT NULL,
+review_id VARCHAR(15) NOT NULL,
+timestamp SMALLDATETIME,
+PRIMARKY KEY (student_id, admin_id, course_id, review_id),
+FOREIGN KEY (student_id) REFERENCES course_review(student_id),
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id),
+FOREIGN KEY (course_id) REFERENCES course_review(course_id),
+FOREIGN KEY (review_id) REFERENCES course_review(review_id)
+)
+COLLATE=utf8_unicode_ci
+ENGINE=InnoDB;
