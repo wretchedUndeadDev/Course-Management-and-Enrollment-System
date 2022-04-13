@@ -1,0 +1,53 @@
+-- MariaDB dump 10.19  Distrib 10.5.12-MariaDB, for Linux (x86_64)
+--
+-- Host: mysql.hostinger.ro    Database: u574849695_22
+-- ------------------------------------------------------
+-- Server version	10.5.12-MariaDB-cll-lve
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `term`
+--
+
+DROP TABLE IF EXISTS `term`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `term` (
+  `course_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `year` int(11) NOT NULL,
+  `season` char(3) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`course_id`,`year`,`season`),
+  CONSTRAINT `term_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `term`
+--
+
+LOCK TABLES `term` WRITE;
+/*!40000 ALTER TABLE `term` DISABLE KEYS */;
+INSERT INTO `term` VALUES ('23521961',1993,'W'),('30079813',1977,'Sum'),('30553563',2013,'F'),('40752009',1995,'Sum'),('41831309',1970,'Spr'),('45489920',1993,'W'),('60451721',1986,'F'),('63014977',1986,'Sum'),('89540784',1984,'W'),('91074499',2003,'W');
+/*!40000 ALTER TABLE `term` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-04-13 21:12:27

@@ -1,3 +1,7 @@
+<?php
+    include('config/config.php');
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -63,7 +67,6 @@
                 height: 100px;
             }
         </style>
-
     </head>
 
     <body>
@@ -79,12 +82,14 @@
                 <h2 id="subTitle1">Welcome to the Course Management and Enrollment System!</h2>
                 <h2 id="subTitle2">Are you a Student or an Administrator?</h2>
                 <div id="adminButtonContainer">
-                    <a href="file:///C:/wamp64/www/Test/CMES/adminLogin.html">
-                        <button id="adminButton" class="btn btn-lg btn-primary" type="button">Administrator</button>
+                    <a href=<?php echo STUDENT_LOGIN_LINK; ?>>
+                        <button id="adminButton" class="btn btn-lg btn-primary" type="button">
+                            Administrator
+                        </button>
                     </a>
                 </div>
                 <div id="studentButtonContainer">
-                    <a href="file:///C:/wamp64/www/Test/CMES/studentLogin.html">
+                    <a href=<?php echo ADMIN_LOGIN_LINK; ?>>
                         <button id="studentButton" class="btn btn-lg btn-primary" type="button">Student</button>
                     </a>
                 </div>
