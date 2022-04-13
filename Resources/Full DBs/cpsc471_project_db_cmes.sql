@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Apr 13, 2022 at 09:43 PM
+-- Generation Time: Apr 13, 2022 at 09:50 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.3.12
 
@@ -103,6 +103,42 @@ CREATE TABLE IF NOT EXISTS `admin_adds_class` (
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `admin_adds_class`
+--
+
+INSERT INTO `admin_adds_class` (`parent_course_id`, `class_num`, `admin_id`, `timestamp`) VALUES
+('23521961', 84397119, '45985804', '2022-04-13 15:49:38'),
+('23521961', 84397119, '99971926', '2022-04-13 15:49:38'),
+('23521961', 95788748, '86815604', '2022-04-13 15:49:38'),
+('30079813', 29343246, '99971926', '2022-04-13 15:49:38'),
+('30079813', 64264755, '45985804', '2022-04-13 15:49:38'),
+('30079813', 64264755, '99971926', '2022-04-13 15:49:38'),
+('30079813', 72137608, '86815604', '2022-04-13 15:49:38'),
+('30079813', 72137608, '99971926', '2022-04-13 15:49:38'),
+('30553563', 80836920, '63713713', '2022-04-13 15:49:38'),
+('30553563', 80836920, '86815604', '2022-04-13 15:49:38'),
+('40752009', 15838514, '95353254', '2022-04-13 15:49:38'),
+('40752009', 39872714, '86815604', '2022-04-13 15:49:38'),
+('41831309', 19099445, '45985804', '2022-04-13 15:49:38'),
+('41831309', 19099445, '63713713', '2022-04-13 15:49:38'),
+('41831309', 19099445, '86815604', '2022-04-13 15:49:38'),
+('41831309', 57341746, '99971926', '2022-04-13 15:49:38'),
+('45489920', 35621838, '99971926', '2022-04-13 15:49:38'),
+('45489920', 36123070, '63713713', '2022-04-13 15:49:38'),
+('45489920', 67358362, '86815604', '2022-04-13 15:49:38'),
+('60451721', 16038394, '86815604', '2022-04-13 15:49:38'),
+('60451721', 16038394, '95353254', '2022-04-13 15:49:38'),
+('60451721', 21820684, '45985804', '2022-04-13 15:49:38'),
+('60451721', 21820684, '63713713', '2022-04-13 15:49:38'),
+('60451721', 52357231, '99971926', '2022-04-13 15:49:38'),
+('63014977', 37560166, '45985804', '2022-04-13 15:49:38'),
+('63014977', 78125453, '45985804', '2022-04-13 15:49:38'),
+('89540784', 33922924, '63713713', '2022-04-13 15:49:38'),
+('89540784', 33922924, '99971926', '2022-04-13 15:49:38'),
+('89540784', 51763407, '63713713', '2022-04-13 15:49:38'),
+('91074499', 46635596, '45985804', '2022-04-13 15:49:38');
+
 -- --------------------------------------------------------
 
 --
@@ -181,6 +217,27 @@ CREATE TABLE IF NOT EXISTS `admin_edits_class` (
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `admin_edits_class`
+--
+
+INSERT INTO `admin_edits_class` (`parent_course_id`, `class_num`, `admin_id`, `timestamp`) VALUES
+('30079813', 29343246, '99971926', '2022-04-13 15:49:38'),
+('30079813', 64264755, '86815604', '2022-04-13 15:49:38'),
+('30079813', 72137608, '63713713', '2022-04-13 15:49:38'),
+('30553563', 94737003, '45985804', '2022-04-13 15:49:38'),
+('40752009', 15838514, '63713713', '2022-04-13 15:49:38'),
+('40752009', 15838514, '86815604', '2022-04-13 15:49:38'),
+('45489920', 35621838, '95353254', '2022-04-13 15:49:38'),
+('45489920', 36123070, '45985804', '2022-04-13 15:49:38'),
+('60451721', 21820684, '45985804', '2022-04-13 15:49:38'),
+('60451721', 52357231, '45985804', '2022-04-13 15:49:38'),
+('63014977', 67663860, '99971926', '2022-04-13 15:49:38'),
+('63014977', 78125453, '95353254', '2022-04-13 15:49:38'),
+('89540784', 33922924, '86815604', '2022-04-13 15:49:38'),
+('91074499', 46635596, '63713713', '2022-04-13 15:49:38'),
+('91074499', 81373411, '95353254', '2022-04-13 15:49:38');
+
 -- --------------------------------------------------------
 
 --
@@ -224,6 +281,17 @@ CREATE TABLE IF NOT EXISTS `admin_edits_course_review` (
   KEY `course_id` (`course_id`,`student_id`,`review_id`),
   KEY `admin_id` (`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `admin_edits_course_review`
+--
+
+INSERT INTO `admin_edits_course_review` (`student_id`, `admin_id`, `course_id`, `review_id`, `timestamp`) VALUES
+('30827190', '86815604', '40752009', '54352272', '2022-04-13 15:49:38'),
+('37293133', '45985804', '41831309', '52290581', '2022-04-13 15:49:38'),
+('37293133', '86815604', '41831309', '52290581', '2022-04-13 15:49:38'),
+('56440516', '86815604', '45489920', '97055545', '2022-04-13 15:49:38'),
+('98978347', '99971926', '91074499', '48752836', '2022-04-13 15:49:38');
 
 -- --------------------------------------------------------
 
@@ -465,6 +533,42 @@ CREATE TABLE IF NOT EXISTS `class_days` (
   PRIMARY KEY (`parent_course_id`,`class_num`,`day`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `class_days`
+--
+
+INSERT INTO `class_days` (`parent_course_id`, `class_num`, `day`) VALUES
+('23521961', 32776127, 'T'),
+('23521961', 84397119, 'W'),
+('23521961', 95788748, 'R'),
+('30079813', 29343246, 'M'),
+('30079813', 64264755, 'T'),
+('30079813', 72137608, 'R'),
+('30553563', 12968084, 'F'),
+('30553563', 80836920, 'R'),
+('30553563', 94737003, 'M'),
+('40752009', 15838514, 'F'),
+('40752009', 16360291, 'R'),
+('40752009', 39872714, 'W'),
+('41831309', 19099445, 'W'),
+('41831309', 57341746, 'W'),
+('41831309', 73541304, 'T'),
+('45489920', 35621838, 'T'),
+('45489920', 36123070, 'W'),
+('45489920', 67358362, 'M'),
+('60451721', 16038394, 'W'),
+('60451721', 21820684, 'W'),
+('60451721', 52357231, 'F'),
+('63014977', 37560166, 'W'),
+('63014977', 67663860, 'M'),
+('63014977', 78125453, 'T'),
+('89540784', 33922924, 'R'),
+('89540784', 51763407, 'F'),
+('89540784', 57531269, 'W'),
+('91074499', 46635596, 'M'),
+('91074499', 64875982, 'T'),
+('91074499', 81373411, 'T');
+
 -- --------------------------------------------------------
 
 --
@@ -479,6 +583,15 @@ CREATE TABLE IF NOT EXISTS `concentration` (
   `description` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`major_faculty_name`,`major_name`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `concentration`
+--
+
+INSERT INTO `concentration` (`major_faculty_name`, `major_name`, `name`, `description`) VALUES
+('minima', 'provident', 'exercitationem', 'Eos repellendus velit harum dolorem. Qui ut sunt laudantium iure voluptatum. Impedit veniam earum quasi eveniet et voluptatem. In et possimus rerum et earum ex odit. Et veritatis in eveniet quos pariatur et eum.'),
+('nulla', 'nam', 'unde', 'Provident culpa placeat enim deleniti. Et commodi laborum sit sed ut qui. Temporibus et voluptatem non eius inventore porro. Rerum blanditiis et eveniet quae et voluptatem.'),
+('omnis', 'vero', 'sit', 'Laudantium aut a quibusdam eos. Quia iste non delectus quo id et. Deleniti quia rerum quas dolores quis necessitatibus distinctio.');
 
 -- --------------------------------------------------------
 
@@ -823,6 +936,22 @@ CREATE TABLE IF NOT EXISTS `course_required_by_concentration` (
   KEY `required_course_id` (`required_course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `course_required_by_concentration`
+--
+
+INSERT INTO `course_required_by_concentration` (`major_program_name`, `major_program_faculty`, `concentration_name`, `required_course_id`) VALUES
+('nam', 'nulla', 'unde', '23521961'),
+('provident', 'minima', 'exercitationem', '23521961'),
+('vero', 'omnis', 'sit', '23521961'),
+('vero', 'omnis', 'sit', '40752009'),
+('vero', 'omnis', 'sit', '45489920'),
+('provident', 'minima', 'exercitationem', '60451721'),
+('vero', 'omnis', 'sit', '63014977'),
+('nam', 'nulla', 'unde', '89540784'),
+('nam', 'nulla', 'unde', '91074499'),
+('vero', 'omnis', 'sit', '91074499');
+
 -- --------------------------------------------------------
 
 --
@@ -838,6 +967,22 @@ CREATE TABLE IF NOT EXISTS `course_required_by_major_program` (
   KEY `major_program_faculty` (`major_program_faculty`,`major_program_name`),
   KEY `required_course_id` (`required_course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `course_required_by_major_program`
+--
+
+INSERT INTO `course_required_by_major_program` (`major_program_name`, `major_program_faculty`, `required_course_id`) VALUES
+('fugit', 'consectetur', '23521961'),
+('vero', 'omnis', '23521961'),
+('fugit', 'consectetur', '40752009'),
+('provident', 'minima', '41831309'),
+('vero', 'omnis', '41831309'),
+('provident', 'minima', '60451721'),
+('vitae', 'quae', '63014977'),
+('nam', 'nulla', '89540784'),
+('vero', 'omnis', '89540784'),
+('fugit', 'consectetur', '91074499');
 
 -- --------------------------------------------------------
 
@@ -855,6 +1000,22 @@ CREATE TABLE IF NOT EXISTS `course_required_by_minor_program` (
   KEY `required_course_id` (`required_course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `course_required_by_minor_program`
+--
+
+INSERT INTO `course_required_by_minor_program` (`minor_program_name`, `minor_program_faculty`, `required_course_id`) VALUES
+('aut', 'minima', '23521961'),
+('eos', 'nulla', '23521961'),
+('aut', 'minima', '30553563'),
+('modi', 'omnis', '40752009'),
+('aut', 'minima', '41831309'),
+('dolorum', 'consectetur', '60451721'),
+('id', 'quae', '63014977'),
+('modi', 'omnis', '63014977'),
+('aut', 'minima', '89540784'),
+('modi', 'omnis', '91074499');
+
 -- --------------------------------------------------------
 
 --
@@ -870,6 +1031,22 @@ CREATE TABLE IF NOT EXISTS `course_restricted_to_major_program` (
   KEY `major_program_faculty` (`major_program_faculty`,`major_program_name`),
   KEY `restricted_course_id` (`restricted_course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `course_restricted_to_major_program`
+--
+
+INSERT INTO `course_restricted_to_major_program` (`major_program_name`, `major_program_faculty`, `restricted_course_id`) VALUES
+('vitae', 'quae', '23521961'),
+('fugit', 'consectetur', '30079813'),
+('fugit', 'consectetur', '40752009'),
+('nam', 'nulla', '40752009'),
+('fugit', 'consectetur', '41831309'),
+('fugit', 'consectetur', '45489920'),
+('vero', 'omnis', '45489920'),
+('vitae', 'quae', '45489920'),
+('vitae', 'quae', '60451721'),
+('vero', 'omnis', '91074499');
 
 -- --------------------------------------------------------
 
@@ -1076,6 +1253,32 @@ CREATE TABLE IF NOT EXISTS `student_course_class_enroll` (
   KEY `enrolled_course_id` (`enrolled_course_id`,`enrolled_class_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `student_course_class_enroll`
+--
+
+INSERT INTO `student_course_class_enroll` (`enrolling_student_id`, `enrolled_course_id`, `enrolled_class_num`) VALUES
+('98978347', '23521961', 32776127),
+('85484864', '30079813', 64264755),
+('30827190', '30553563', 80836920),
+('56440516', '30553563', 94737003),
+('56440516', '40752009', 15838514),
+('98978347', '41831309', 19099445),
+('68937537', '41831309', 57341746),
+('85484864', '45489920', 36123070),
+('18496080', '45489920', 67358362),
+('30827190', '45489920', 67358362),
+('98978347', '60451721', 21820684),
+('14022287', '89540784', 33922924),
+('88028526', '89540784', 33922924),
+('18496080', '89540784', 51763407),
+('37293133', '89540784', 51763407),
+('19846756', '89540784', 57531269),
+('30827190', '89540784', 57531269),
+('88028526', '89540784', 57531269),
+('56440516', '91074499', 64875982),
+('19846756', '91074499', 81373411);
+
 -- --------------------------------------------------------
 
 --
@@ -1090,6 +1293,32 @@ CREATE TABLE IF NOT EXISTS `student_course_class_request` (
   PRIMARY KEY (`requesting_student_id`,`requested_course_id`,`requested_class_num`),
   KEY `requested_course_id` (`requested_course_id`,`requested_class_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `student_course_class_request`
+--
+
+INSERT INTO `student_course_class_request` (`requesting_student_id`, `requested_course_id`, `requested_class_num`) VALUES
+('85484864', '23521961', 32776127),
+('18496080', '23521961', 95788748),
+('30827190', '23521961', 95788748),
+('68937537', '23521961', 95788748),
+('68937537', '30079813', 29343246),
+('88028526', '30079813', 64264755),
+('37293133', '30079813', 72137608),
+('14022287', '30553563', 12968084),
+('68937537', '30553563', 80836920),
+('30827190', '30553563', 94737003),
+('37293133', '40752009', 16360291),
+('88028526', '40752009', 16360291),
+('98978347', '41831309', 19099445),
+('68937537', '41831309', 57341746),
+('56440516', '41831309', 73541304),
+('85484864', '45489920', 35621838),
+('30827190', '60451721', 16038394),
+('18496080', '89540784', 51763407),
+('68937537', '89540784', 57531269),
+('85484864', '91074499', 64875982);
 
 -- --------------------------------------------------------
 
@@ -1106,6 +1335,32 @@ CREATE TABLE IF NOT EXISTS `student_course_class_waitlist` (
   PRIMARY KEY (`waitlisting_student_id`,`waitlisted_course_id`,`waitlisted_class_num`),
   KEY `waitlisted_course_id` (`waitlisted_course_id`,`waitlisted_class_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `student_course_class_waitlist`
+--
+
+INSERT INTO `student_course_class_waitlist` (`waitlisting_student_id`, `waitlisted_course_id`, `waitlisted_class_num`, `waitlist_position`) VALUES
+('14022287', '23521961', 84397119, 18),
+('14022287', '30079813', 29343246, 20),
+('14022287', '40752009', 16360291, 1),
+('14022287', '63014977', 37560166, 11),
+('18496080', '30079813', 29343246, 17),
+('18496080', '40752009', 16360291, 11),
+('18496080', '89540784', 57531269, 4),
+('19846756', '40752009', 15838514, 18),
+('19846756', '40752009', 39872714, 11),
+('30827190', '30079813', 29343246, 10),
+('30827190', '60451721', 16038394, 1),
+('30827190', '63014977', 67663860, 15),
+('37293133', '60451721', 21820684, 18),
+('56440516', '30079813', 29343246, 12),
+('68937537', '23521961', 32776127, 11),
+('68937537', '45489920', 67358362, 9),
+('85484864', '40752009', 15838514, 6),
+('88028526', '40752009', 16360291, 5),
+('98978347', '40752009', 16360291, 6),
+('98978347', '89540784', 57531269, 10);
 
 -- --------------------------------------------------------
 
@@ -1193,6 +1448,22 @@ CREATE TABLE IF NOT EXISTS `student_focuses_concentration` (
   KEY `program_faculty` (`program_faculty`,`program_name`,`concentration_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `student_focuses_concentration`
+--
+
+INSERT INTO `student_focuses_concentration` (`student_id`, `program_faculty`, `program_name`, `concentration_name`) VALUES
+('18496080', 'minima', 'provident', 'exercitationem'),
+('30827190', 'minima', 'provident', 'exercitationem'),
+('56440516', 'minima', 'provident', 'exercitationem'),
+('68937537', 'minima', 'provident', 'exercitationem'),
+('14022287', 'nulla', 'nam', 'unde'),
+('56440516', 'nulla', 'nam', 'unde'),
+('68937537', 'nulla', 'nam', 'unde'),
+('14022287', 'omnis', 'vero', 'sit'),
+('19846756', 'omnis', 'vero', 'sit'),
+('56440516', 'omnis', 'vero', 'sit');
+
 -- --------------------------------------------------------
 
 --
@@ -1247,6 +1518,22 @@ CREATE TABLE IF NOT EXISTS `student_takes_major_program` (
   KEY `major_program_faculty` (`major_program_faculty`,`major_program_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `student_takes_major_program`
+--
+
+INSERT INTO `student_takes_major_program` (`student_id`, `major_program_faculty`, `major_program_name`) VALUES
+('14022287', 'consectetur', 'fugit'),
+('19846756', 'consectetur', 'fugit'),
+('18496080', 'minima', 'provident'),
+('56440516', 'minima', 'provident'),
+('68937537', 'nulla', 'nam'),
+('14022287', 'omnis', 'vero'),
+('85484864', 'omnis', 'vero'),
+('19846756', 'quae', 'vitae'),
+('37293133', 'quae', 'vitae'),
+('68937537', 'quae', 'vitae');
+
 -- --------------------------------------------------------
 
 --
@@ -1261,6 +1548,22 @@ CREATE TABLE IF NOT EXISTS `student_takes_minor_program` (
   PRIMARY KEY (`student_id`,`minor_program_faculty`,`minor_program_name`),
   KEY `minor_program_faculty` (`minor_program_faculty`,`minor_program_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `student_takes_minor_program`
+--
+
+INSERT INTO `student_takes_minor_program` (`student_id`, `minor_program_faculty`, `minor_program_name`) VALUES
+('37293133', 'consectetur', 'dolorum'),
+('88028526', 'consectetur', 'dolorum'),
+('56440516', 'minima', 'aut'),
+('56440516', 'nulla', 'eos'),
+('85484864', 'nulla', 'eos'),
+('14022287', 'omnis', 'modi'),
+('30827190', 'omnis', 'modi'),
+('18496080', 'quae', 'id'),
+('30827190', 'quae', 'id'),
+('37293133', 'quae', 'id');
 
 -- --------------------------------------------------------
 

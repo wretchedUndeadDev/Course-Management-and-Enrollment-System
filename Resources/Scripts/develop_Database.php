@@ -6,7 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
     $host = 'localhost';
-    $db_name = 'cpsc471_projectdb_cmes';
+    $db_name = 'cpsc471_project_db_cmes';
     $username = 'root';
     $password = '';
     $db = null;
