@@ -72,15 +72,19 @@
     <body>
 
         <div id="mainContentWrapper">
+
             <div id="mainContentContainer">
                 <header>
                     <div class="card text-white bg-primary mb-3">
                         <h1 id="mainTitle1">Course Management and Enrollment System</h1>
                     </div>
                 </header>
+
                 <hr id="line1">
+
                 <h2 id="subTitle1">Welcome to the Course Management and Enrollment System!</h2>
                 <h2 id="subTitle2">Are you a Student or an Administrator?</h2>
+
                 <div id="adminButtonContainer">
                     <a href=<?php echo STUDENT_LOGIN_LINK; ?>>
                         <button id="adminButton" class="btn btn-lg btn-primary" type="button">
@@ -88,13 +92,16 @@
                         </button>
                     </a>
                 </div>
+
                 <div id="studentButtonContainer">
                     <a href=<?php echo ADMIN_LOGIN_LINK; ?>>
                         <button id="studentButton" class="btn btn-lg btn-primary" type="button">Student</button>
                     </a>
                 </div>
-            </div>
-        </div>
+
+            </div> <!--mainContentContainer-->
+
+        </div> <!--mainContentWrapper-->
 
         <footer id="footer">
             <div id="footerContent" class="card text-white bg-primary mb-3">

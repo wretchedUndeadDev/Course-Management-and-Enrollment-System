@@ -1,5 +1,48 @@
 <?php
     include('config/config.php');
+
+    $attempted_login = false;
+    $student_exists = false;
+
+    //Check for attempted Login
+    if (isset($_POST['login'])) {
+        $attempted_login = true;
+
+        //Get login form data
+        $student_id = $_POST['student_id'];
+        $Lname = $_POST['Lname'];
+
+        //call api
+        $student_data = json_decode(file_get_contents(ROOT_URL.'api/student/login.php?student_id='.$student_id.'&Lname='.$Lname));
+
+        //DEBUGGING
+        //print_r($student_data->student_id);
+
+        if ($student_data->student_id == 0) {
+            //Student does not exist, display error information
+            $student_exists = false;
+
+        } else {
+            //Student does exist
+            $student_exists = true;
+            
+            //DEBUGGING
+            //echo "Student Exists!";
+
+            //Create Student Cookie (This will be used by all following student pages)
+            setcookie("student_id", $student_data->student_id, time()+3600);
+
+            header('Location: '.ROOT_URL.'studentHome.php');
+
+
+
+
+
+
+
+
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +102,7 @@
             #studentLoginCard {
                 position: absolute;
                 left: 50%;
-                top: 55%;
+                top: 50%;
                 transform: translate(-50%,-50%);
             }
             #backButton {
@@ -73,12 +116,18 @@
                 left: 65%;
             }
 
+            #invalidLoginCard {
+                position: absolute;
+                left: 50%;
+                top: 85%;
+                transform: translate(-50%,-50%);
+            }
+
+
             /*https://stackoverflow.com/questions/7106970/how-to-make-a-div-with-rounded-corners*/
             #studentNameDataEntryField, #studentID_dataEntryField {
                 place-items: center;
                 background-color: #f0ad4e;
-                /*padding: 10px;*/
-                /*padding-top: 30px;*/
                 padding-left: 15px;
                 padding-right: 15px;
                 padding-bottom: 15px;
@@ -109,15 +158,15 @@
                         <p class="card-text">
                             Please Enter your student Name and ID number to login to the system
                         </p>
-                        <form id="loginForm" method="POST" action="<?php echo ROOT_URL.'api/student/login.php' ?>">
-                            <div id="studentNameDataEntryField" name="Lname" class="form-group-row">
+                        <form id="loginForm" method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
+                            <div id="studentNameDataEntryField" class="form-group-row">
                                 <label class="form-label mt-4">Student Name:</label>
-                                <input type="text" class="form-control">
+                                <input type="text" name="Lname" class="form-control">
                             </div>
                             <br>
-                            <div id="studentID_dataEntryField" name="student_id" class="form-group-row">
+                            <div id="studentID_dataEntryField" class="form-group-row">
                                 <label class="form-label mt-4">Student ID:</label>
-                                <input type="text" class="form-control">
+                                <input type="text" name="student_id" class="form-control">
                             </div>
                             <br>
                             <a href=<?php echo HOME_PAGE_LINK; ?>>
@@ -127,6 +176,13 @@
                         </form>
                     </div>
                 </div>
+
+                <?php if ($attempted_login && !($student_exists)) : ?>
+                    <div id="invalidLoginCard" class="alert alert-dismissible alert-danger">
+                        <strong>Invalid Login!</strong> 
+                        The login credentials you provided do not match any know student
+                    </div>
+                <?php endif; ?>
 
             </div>
         </div>

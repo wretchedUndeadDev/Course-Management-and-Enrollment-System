@@ -20,7 +20,7 @@
     } catch (PDOException $e) {
         echo 'Connection Error: '.$e->getMessage();
     }
-    echo 'Successfully Connected to Database!';
+    echo 'Successfully Connected to Database!\n';
 
 
 
