@@ -1,5 +1,5 @@
 <?php
-    include('config/config.php');
+    include('../config/config.php');
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
         <!--Styling for index.html uses .css file in the 'Styles' folder of this project by defualt
         to make further changes to this styling simply insert whatever required styling here as internal css
         under the '<style>' tag-->
-        <link rel="stylesheet" type="text/css" href="Styles/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../Styles/bootstrap.css">
         <style>
             /*https://stackoverflow.com/questions/3525581/how-to-align-footer-div-to-the-bottom-of-the-page*/
             html, body {
@@ -86,7 +86,7 @@
                 <h2 id="subTitle2">Are you a Student or an Administrator?</h2>
 
                 <div id="adminButtonContainer">
-                    <a href=<?php echo STUDENT_LOGIN_LINK; ?>>
+                    <a href="<?php echo ROOT_URL.'pages/admin/adminLogin.php' ?>">
                         <button id="adminButton" class="btn btn-lg btn-primary" type="button">
                             Administrator
                         </button>
@@ -94,7 +94,7 @@
                 </div>
 
                 <div id="studentButtonContainer">
-                    <a href=<?php echo ADMIN_LOGIN_LINK; ?>>
+                    <a href="<?php echo ROOT_URL.'pages/student/studentLogin.php' ?>">
                         <button id="studentButton" class="btn btn-lg btn-primary" type="button">Student</button>
                     </a>
                 </div>

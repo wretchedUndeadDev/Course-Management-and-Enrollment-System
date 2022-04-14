@@ -1,5 +1,5 @@
 <?php
-    include('config/config.php');
+    include('../../config/config.php');
 
     //Retrieve student_id in Cookie
     if (isset($_COOKIE['student_id'])) {
@@ -47,7 +47,7 @@
         <!--Styling for index.html uses .css file in the 'Styles' folder of this project by defualt
         to make further changes to this styling simply insert whatever required styling here as internal css
         under the '<style>' tag-->
-        <link rel="stylesheet" type="text/css" href="Styles/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo ROOT_URL.'Styles/bootstrap.css'?>">
         <style>
             /*https://stackoverflow.com/questions/3525581/how-to-align-footer-div-to-the-bottom-of-the-page*/
             html, body {
@@ -79,9 +79,21 @@
                 padding: 8px;
             }
 
-            /*Center Align main titles*/
+            #mainTitleContainer {
+                flex-direction: row;
+                justify-content:center;
+                padding: 1%;
+            }
             #mainTitle1 {
+                margin-left:auto;
                 text-align: center;
+            }
+            #signOutButtonOuter {
+                margin-left:auto;
+            }
+            #signOutButtonInner {
+                height: 100%;
+                width: 100%;
             }
 
             #line1 {
@@ -188,8 +200,11 @@
         <div id="mainContentWrapper">
             <div id="mainContentContainer">
                 <header>
-                    <div class="card text-white bg-primary mb-3">
+                    <div id="mainTitleContainer" class="card text-white bg-primary mb-3">
                         <h1 id="mainTitle1">Welcome <?php echo $student_data->Fname.' '.$student_data->Lname ?></h1>
+                        <a id="signOutButtonOuter" href="<?php echo ROOT_URL.'pages/student/studentLogin.php' ?>">
+                            <button id="signOutButtonInner" class="btn btn-warning responsiveButton">Sign Out</button>
+                        </a>
                     </div>
                 </header>
                 <hr id="line1">
@@ -207,7 +222,7 @@
                             <div id="grid1Wrapper">
     
                                 <div id="grid1_sec1" >
-                                    <img id="profilePic" src="Images/icons8-test-account-80.png" style="width: 10vw; height: auto;">
+                                    <img id="profilePic" src="<?php echo ROOT_URL.'Images/icons8-test-account-80.png'?>" style="width: 10vw; height: auto;">
                                 </div>
                               
                                 <div id="grid1_sec2" class="responsiveGridCell">
@@ -269,13 +284,19 @@
                         </div>
                         <div class="card-body">
                             <span class="buttonSpacer">
-                                <button class="btn btn-warning responsiveButton">Enrollment</button>
+                                <a href="<?php echo ROOT_URL.'pages/student/studentEnrolledCourses.php' ?>">
+                                    <button class="btn btn-warning responsiveButton">Enrollment</button>
+                                </a>
                             </span>
                             <span class="buttonSpacer">
-                                <button class="btn btn-warning responsiveButton">Shopping Cart</button>
+                                <a href="<?php echo ROOT_URL.'pages/student/studentShoppingCart.php' ?>">
+                                    <button class="btn btn-warning responsiveButton">Shopping Cart</button>
+                                </a>
                             </span>
                             <span class="buttonSpacer">
-                                <button class="btn btn-warning responsiveButton">Waitlist</button>
+                                <a href="<?php echo ROOT_URL.'pages/student/studentWaitlistedCourses.php' ?>">
+                                    <button class="btn btn-warning responsiveButton">Waitlist</button>
+                                </a>
                             </span>
                         </div>
                     </div>
