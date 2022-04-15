@@ -172,9 +172,10 @@
         //Input: student_id (as student object attribute)
         public function get_enrld_term() {
             //Create query
-            $query = 'SELECT t.course_id, t.year, t.season 
+            $query = 'SELECT DISTINCT t.year, t.season 
                         FROM term AS t, '.$this->scce_table.' AS scce
-                        WHERE t.course_id = scce.course_id AND scce.enrolling_student_id = :sid';
+                        WHERE t.course_id = scce.enrolled_course_id AND scce.enrolling_student_id = :sid';
+
             //Preapare Statement
             $stmt = $this->conn->prepare($query);
 
@@ -194,27 +195,86 @@
 
 
         //Get Student Enrolled Courses for a term
-        //Input: student_id (as student object attribute), term_course_id, term_year, term_season
-        public function get_enrld_term_crs($term_course_id, $term_year, $term_season) {
+        //Input: student_id (as student object attribute), term_year, term_season
+        public function get_enrld_term_crs($term_year, $term_season) {
             //Create query
-            $query = 'SELECT scce.enrolled_course_id 
-                        FROM '.$this->scce_table.' AS scce, term AS t
-                        WHERE scce.enrolled_course_id = t.course_id AND t.course_id = :tcid AND t.year = :y AND t.season = :s AND scce.enrolling_student_id = :sid';
+            $query = 'SELECT t.course_id 
+                        FROM term AS t, '.$this->scce_table.' AS scce
+                        WHERE t.course_id = scce.enrolled_course_id AND scce.enrolling_student_id = :sid AND t.year = :y AND t.season = :s';
 
             //Preapare Statement
             $stmt = $this->conn->prepare($query);
 
             //Clean Data
             $this->student_id = htmlspecialchars(strip_tags($this->student_id));
-            $term_course_id = htmlspecialchars(strip_tags($term_course_id));
             $term_year = htmlspecialchars(strip_tags($term_year));
             $term_season = htmlspecialchars(strip_tags($term_season));
 
             //Bind Data 
             $stmt->bindParam(':sid', $this->student_id);
-            $stmt->bindParam(':tcid', $term_course_id);
             $stmt->bindParam(':y', $term_year);
-            $stmt->bindParam(':s');
+            $stmt->bindParam(':s', $term_season);
+
+            // Execute Statement
+            $stmt->execute();
+
+            // Return statement (corresponding api call will handle the result)
+            return $stmt;
+        }
+
+
+
+        //Get enrolled classes for a course
+        //Input: student_id (as student object attribute), course_id
+        public function get_enrld_crs_cls($course_id) {
+            //Create query
+            $query = 'SELECT cls.parent_course_id, cls.class_num, 
+                        cls.room_num, cls.seat_num, cls.waitlist_num, 
+                        cls.start_time, cls.end_time, 
+                        cls.class_type, cls.instructor, cls.ta, cls.supervisor
+                        FROM class AS cls, '.$this->scce_table.' AS scce 
+                        WHERE scce.enrolling_student_id = :sid AND scce.enrolled_course_id = :cid
+                            AND scce.enrolled_course_id = cls.parent_course_id AND scce.enrolled_class_num = cls.class_num';
+            
+            //Preapare Statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean Data
+            $this->student_id = htmlspecialchars(strip_tags($this->student_id));
+            $course_id = htmlspecialchars(strip_tags($course_id));
+
+            //Bind Data 
+            $stmt->bindParam(':sid', $this->student_id);
+            $stmt->bindParam(':cid', $course_id);
+
+            // Execute Statement
+            $stmt->execute();
+
+            // Return statement (corresponding api call will handle the result)
+            return $stmt;
+        }
+
+        //Get enrolled course class days
+        //Input: student_id (as student object attribute), class_course_id, class_num
+        public function get_enrld_crs_cls_days($class_course_id, $class_num) {
+            //Create query
+            $query = 'SELECT cd.day 
+                        FROM class_days AS cd, '.$this->scce_table.' AS scce 
+                        WHERE scce.enrolling_student_id = :sid AND scce.enrolled_course_id = :cid AND scce.enrolled_class_num = :cn
+                            AND scce.enrolled_course_id = cd.parent_course_id AND scce.enrolled_class_num = cd.class_num';
+            
+            //Preapare Statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean Data
+            $this->student_id = htmlspecialchars(strip_tags($this->student_id));
+            $class_course_id = htmlspecialchars(strip_tags($class_course_id));
+            $class_num = htmlspecialchars(strip_tags($class_num));
+
+            //Bind Data 
+            $stmt->bindParam(':sid', $this->student_id);
+            $stmt->bindParam(':cid', $class_course_id);
+            $stmt->bindParam(':cn', $class_num);
 
             // Execute Statement
             $stmt->execute();

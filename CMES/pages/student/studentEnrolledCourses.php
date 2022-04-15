@@ -5,9 +5,52 @@
     if (isset($_COOKIE['student_id'])) {
         $student_id = $_COOKIE['student_id'];
 
-        //Call API and get student's enrolled courses
-        $student_enrolled_courses;
+        //Call API and get student's enrolled terms
+        $student_enrolled_terms = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term.php?student_id='.$student_id.''));
+        //Load in first term courses by default
+        $student_enrolled_courses_for_selected_term = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term_crs.php?student_id='.$student_id.'&term_year='.$student_enrolled_terms[0]->year.'&term_season='.$student_enrolled_terms[0]->season.''));
+    
+        //DEBUGGING
+        /*
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
+
+        foreach ($student_enrolled_terms as $a) {
+            print_r($a->year);
+            print_r($a->season);
+        }
+        */
+        
+        foreach ($student_enrolled_terms as $selected_term) {
+            $term_button_name = $selected_term->year."_".$selected_term->season;
+            if (array_key_exists($term_button_name, $_POST)) {
+
+                //DEBUGGING
+                /*
+                if (isset($_POST[$term_button_name])) {
+                    echo "I will display courses for this term ".$selected_term->year." ".$selected_term->season;
+                }
+                */
+
+                
+
+                $student_enrolled_courses_for_selected_term = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term_crs.php?student_id='.$student_id.'&term_year='.$selected_term->year.'&term_season='.$selected_term->season.''));
+
+                
+
+                //DEBUGGING
+                /*
+                print_r($student_enrolled_courses_for_selected_term);
+                foreach ($student_enrolled_courses_for_selected_term as $course) {
+                    print_r($course->course_id);
+                }
+                */
+            }
+        }
     }
+
+
 ?>
 
 
@@ -67,6 +110,10 @@
             #homeButtonInner {
                 height: 100%;
                 width: 100%;
+            }
+            #line1 {
+                background-color: #4582ec;
+                height: 2vw;
             }
 
             /*Content Grid Alignment*/
@@ -171,21 +218,29 @@
                         </div>
                         <div class="card-body">
                             <div id="termScroller">
+                                <?php foreach($student_enrolled_terms as $term) : ?>
                                 <span class="termSpacer">
-                                    <button class="btn btn-success">&lt;Some_Term&gt;</button>
+                                    <form method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
+                                        <input type="submit" 
+                                            name="<?php echo $term->year.'_'.$term->season?>" 
+                                            class="btn btn-success"
+                                            value="<?php 
+                                                if ($term->season == 'F') {
+                                                    echo "Fall ".$term->year;
+                                                } elseif ($term->season == 'W') {
+                                                    echo "Winter ".$term->year;
+                                                } elseif ($term->season == 'Sum') {
+                                                    echo "Summer ".$term->year;
+                                                } elseif ($term->season == 'Spr') {
+                                                    echo "Spring ".$term->year;
+                                                }
+                                            ?>"
+                                        >
+                                        </input>
+                                    </form>
+                                    
                                 </span>
-                                <span class="termSpacer">
-                                    <button class="btn btn-success">&lt;Some_Term&gt;</button>
-                                </span>
-                                <span class="termSpacer">
-                                    <button class="btn btn-success">&lt;Some_Term&gt;</button>
-                                </span>
-                                <span class="termSpacer">
-                                    <button class="btn btn-success">&lt;Some_Term&gt;</button>
-                                </span>
-                                <span class="termSpacer">
-                                    <button class="btn btn-success">&lt;Some_Term&gt;</button>
-                                </span>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
@@ -208,146 +263,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&lt;Course_Name&gt;</td>
-                                            <td>&lt;Instructor_Name&gt;</td>
-                                            <td>&lt;Room_#&gt;</td>
-                                            <td>&lt;Some_Time&gt;</td>
-                                            <td>&lt;Some_Days&gt;</td>
-                                            <td>
-                                                <span>
-                                                    <button class="btn btn-primary">Details</button>
-                                                    <button class="btn btn-warning">Edit</button>
-                                                    <button class="btn btn-danger">Drop</button>
-                                                </span>
-                                            </td>
-                                        </tr>
+                                        <?php foreach ($student_enrolled_courses_for_selected_term as $course) : ?>
+                                            <?php $course_data = json_decode(file_get_contents(ROOT_URL.'api/course/get_gen_info.php?course_id='.$course->course_id.'')); ?>
+                                            <tr>
+                                                <td><?php echo $course_data->course_name ?></td>
+                                                <td><?php echo $course_data->course_id ?></td>
+                                                <td><?php echo $course_data->course_level ?></td>
+                                                <td><?php echo $course_data->course_credit ?></td>
+                                                <td>
+                                                    <span>
+                                                        <button class="btn btn-primary">Details</button>
+                                                        <button class="btn btn-warning">Edit</button>
+                                                        <button class="btn btn-danger">Drop</button>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                        
                                     </tbody>
                                 </table>
                             </div><!--Table w/ fixed head-->
