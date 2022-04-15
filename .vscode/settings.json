@@ -1,0 +1,30 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "MySQLConnection",
+      "username": "root",
+      "database": "cpsc471_project_db_cmes",
+      "password": ""
+    },
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "SQL",
+      "database": "cpsc471_project_db_cmes",
+      "username": "admin",
+      "password": ""
+    }
+  ]
+}
