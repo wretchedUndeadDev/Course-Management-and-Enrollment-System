@@ -1,4 +1,8 @@
-// not done!
+<?php
+//Get Database Class
+include_once '../../config/Database.php';
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +12,7 @@
 
     <title>Course Management and Enrollment System | Administrator | Course Review Browser</title>
 
-    <link rel="stylesheet" type="text/css" href="Styles/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo ROOT_URL . 'Styles/bootstrap.css' ?>">
 
     <style>
         /*https://stackoverflow.com/questions/3525581/how-to-align-footer-div-to-the-bottom-of-the-page*/
