@@ -1,5 +1,39 @@
 <?php
 include('../../config/config.php');
+
+$attempted_login = false;
+$admin_exists = false;
+
+//Check for attempted Login
+if (isset($_POST['login'])) {
+    $attempted_login = true;
+
+    //Get login form data
+    $admin_id = $_POST['admin_id'];
+    $Lname = $_POST['Lname'];
+
+    //call api
+    $admin_data = json_decode(file_get_contents(ROOT_URL . 'api/admin/login.php?admin_id=' . $admin_id . '&Lname=' . $Lname));
+
+    //DEBUGGING
+    //print_r($admin_data->admin_id);
+
+    if ($admin_data->admin_id == 0) {
+        //admin does not exist, display error information
+        $admin_exists = false;
+    } else {
+        //admin does exist
+        $admin_exists = true;
+
+        //DEBUGGING
+        //echo "admin Exists!";
+
+        //Create admin Cookie (This will be used by all following admin pages)
+        setcookie("admin_id", $admin_data->admin_id, time() + 3600);
+
+        header('Location: ' . ROOT_URL . 'pages/admin/adminHome.php');
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +47,7 @@ include('../../config/config.php');
 
     <title>Course Management and Enrollment System | Portal</title>
 
-    <!--Styling for studentLogin.html uses .css file in the 'Styles' folder of this project by defualt
+    <!--Styling for adminLogin.html uses .css file in the 'Styles' folder of this project by defualt
         to make further changes to this styling simply insert whatever required styling here as internal css
         under the '<style>' tag-->
     <link rel="stylesheet" type="text/css" href="<?php echo ROOT_URL . 'Styles/bootstrap.css' ?>">
@@ -137,6 +171,13 @@ include('../../config/config.php');
                     </form>
                 </div>
             </div>
+
+            <?php if ($attempted_login && !($admin_exists)) : ?>
+                <div id="invalidLoginCard" class="alert alert-dismissible alert-danger">
+                    <strong>Invalid Login!</strong>
+                    The login credentials you provided do not match any know admin
+                </div>
+            <?php endif; ?>
 
         </div>
     </div>
