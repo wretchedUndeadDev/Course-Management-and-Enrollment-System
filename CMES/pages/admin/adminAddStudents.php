@@ -1,5 +1,35 @@
 <?php
-include('../../config/config.php');
+//Get Database Class
+include_once '../../config/Database.php';
+//Get Student Class
+include_once '../../models/Student.php';
+
+if (isset($_POST["submit"])) {
+    echo "Student created";
+    $student_id = $_POST["student_id"];
+    $fname = $_POST["fname"];
+    $lname = $_POST["lname"];
+    $faculty = $_POST["faculty"];
+    $program = $_POST["program"];
+    $concentration = $_POST["concentration"];
+    $admin = $_POST["admin"];
+
+    require_once 'add_student.php';
+
+    if (emptyInputCreateStudent($student_id, $fname, $lname, $faculty, $program, $concentration, $admin) !== false) {
+        header("location: ../adminAddStudents.php?error=emptyinput");
+        exit();
+    }
+
+    if (studentIDExist($conn, $student_id) !== false) {
+        header("location: ../adminAddStudents.php?error=studentIDtaken");
+        exit();
+    }
+
+    createStudent($conn, $student_id, $fname, $lname, $faculty, $program, $concentration);
+} else {
+    header("location: ../adminAddStudents.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -168,13 +198,13 @@ include('../../config/config.php');
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" id="student_id" />
+                            <input type="text" class="form-control" name="student_id" />
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="fname" />
+                            <input type="text" class="form-control" name="fname" />
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" id="lname" />
+                            <input type="text" class="form-control" name="lname" />
                         </div>
                         <div class="col">
 
@@ -218,6 +248,20 @@ include('../../config/config.php');
                             <button id="createButton" type="submit" class="btn btn-primary">Create Student</button>
                         </row>
                     </div>
+                    <?php
+                    if (isset($_GET["error"])) {
+                        if ($_GET["error"] == "emptyinput") {
+                            echo "<p>Fill in all fields!</p>";
+                        } else if ($_GET["error"] == "studentIDtaken") {
+                            echo "<p>Student ID taken!</p>";
+                        } else if ($_GET["error"] == "stmtfailed") {
+                            echo "<p>Something went wrong!</p>";
+                        } else if ($_GET["error"] == "none") {
+                            echo "<p>Student created!</p>";
+                        }
+                    }
+                    ?>
+
                 </form>
             </div>
         </div>
