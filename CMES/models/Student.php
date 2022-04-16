@@ -9,6 +9,7 @@
         private $sccr_table = 'student_course_class_request';
         private $scce_table = 'student_course_class_enroll';
         private $sccw_table = 'student_course_class_wailist';
+        private $sct_table = 'student_course_taken';
 
 
         // Basic Properties - native to 'student' relation
@@ -254,6 +255,8 @@
             return $stmt;
         }
 
+
+
         //Get enrolled course class days
         //Input: student_id (as student object attribute), class_course_id, class_num
         public function get_enrld_crs_cls_days($class_course_id, $class_num) {
@@ -281,6 +284,166 @@
 
             // Return statement (corresponding api call will handle the result)
             return $stmt;
+        }
+
+
+
+        //Get taken courses
+        //Input student_id (as student object attribute)
+        public function get_tkn_crs() {
+            $query = 'SELECT sct.course_id
+                        FROM '.$this->sct_table.' AS sct
+                        WHERE sct.student_id = :sid';
+            
+            //Preapare Statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean Data
+            $this->student_id = htmlspecialchars(strip_tags($this->student_id));
+    
+            //Bind Data 
+            $stmt->bindParam(':sid', $this->student_id);
+
+            // Execute Statement
+            $stmt->execute();
+
+            // Return statement (corresponding api call will handle the result)
+            return $stmt;
+        }
+
+
+
+        //Drop Enrolled class
+        //Input: student_id (as student object attribute), class_course_id, class_num 
+        public function drop_enrld_cls($class_course_id, $class_num) {
+            //Create query
+            $query = 'DELETE FROM '.$this->scce_table.' AS scce
+                        WHERE scce.enrolling_student_id = :sid
+                        AND scce.enrolled_course_id = :cid
+                        AND scce.enrolled_class_num = :cn';
+
+            // Prepare Statement
+            $stmt = $this->conn->prepare($query);
+
+            // Clean data 
+            $this->student_id = htmlspecialchars(strip_tags($this->student_id));
+            $class_course_id = htmlspecialchars(strip_tags($class_course_id));
+            $class_num = htmlspecialchars(strip_tags($class_num));
+
+            //Bind data
+            $stmt->bindParam(':sid', $this->student_id);
+            $stmt->bindParam(':cid', $class_course_id);
+            $stmt->bindParam(':cn', $class_num);
+
+            //Execute
+            if($stmt->execute()) {
+                return true;
+            }
+
+            // Print error data if statement fails to execute
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+        }
+
+
+
+        //Drop Requested class
+        //Input: student_id (as student object attribute), class_course_id, class_num 
+        public function drop_rqstd_cls($class_course_id, $class_num) {
+            //Create query
+            $query = 'DELETE FROM '.$this->sccr_table.' AS sccr
+                        WHERE sccr.enrolling_student_id = :sid
+                        AND sccr.enrolled_course_id = :cid
+                        AND sccr.enrolled_class_num = :cn';
+
+            // Prepare Statement
+            $stmt = $this->conn->prepare($query);
+
+            // Clean data 
+            $this->student_id = htmlspecialchars(strip_tags($this->student_id));
+            $class_course_id = htmlspecialchars(strip_tags($class_course_id));
+            $class_num = htmlspecialchars(strip_tags($class_num));
+
+            //Bind data
+            $stmt->bindParam(':sid', $this->student_id);
+            $stmt->bindParam(':cid', $class_course_id);
+            $stmt->bindParam(':cn', $class_num);
+
+            //Execute
+            if($stmt->execute()) {
+                return true;
+            }
+
+            // Print error data if statement fails to execute
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+        }
+
+
+
+        //Drop waitlisted class
+        //Input: student_id (as student object attribute), class_course_id, class_num 
+        public function drop_wtlstd_cls($class_course_id, $class_num) {
+            //Create query
+            $query = 'DELETE FROM '.$this->sccw_table.' AS sccw
+                        WHERE sccw.enrolling_student_id = :sid
+                        AND sccw.enrolled_course_id = :cid
+                        AND sccw.enrolled_class_num = :cn';
+
+            // Prepare Statement
+            $stmt = $this->conn->prepare($query);
+
+            // Clean data 
+            $this->student_id = htmlspecialchars(strip_tags($this->student_id));
+            $class_course_id = htmlspecialchars(strip_tags($class_course_id));
+            $class_num = htmlspecialchars(strip_tags($class_num));
+
+            //Bind data
+            $stmt->bindParam(':sid', $this->student_id);
+            $stmt->bindParam(':cid', $class_course_id);
+            $stmt->bindParam(':cn', $class_num);
+
+            //Execute
+            if($stmt->execute()) {
+                return true;
+            }
+
+            // Print error data if statement fails to execute
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+        }
+
+        //Enroll student in class
+        //Input: student_id (as student object attribute), class_course_id, class_num 
+        public function enrl_cls($class_course_id, $class_num) {
+            //Create Query
+            $query = 'INSERT INTO '.$this->scce_table.'
+                        SET
+                            enrolling_student_id = :sid,
+                            enrolled_course_id = :cid,
+                            enrolled_class_num = :cn';
+            
+            // Prepare Statement
+            $stmt = $this->conn->prepare($query);
+
+            // Clean Data
+            $this->student_id = htmlspecialchars(strip_tags($this->student_id));
+            $class_course_id = htmlspecialchars(strip_tags($class_course_id));
+            $class_num = htmlspecialchars(strip_tags($class_num));
+
+            //Bind data
+            $stmt->bindParam(':title', $this->student_id);
+            $stmt->bindParam(':body', $class_course_id);
+            $stmt->bindParam(':author', $class_num);
+
+            //Execute
+            if($stmt->execute()) {
+                return true;
+            }
+
+            // Print error data if statement fails to execute
+            printf("Error: %s.\n", $stmt->error);
+            return false;               
         }
 
 

@@ -5,12 +5,14 @@ header('Content-Type: application/json');
 
 //Get Database Class
 include_once '../../config/Database.php';
+
 //Get Admin Class
 include_once '../../models/Admin.php';
 
 // Instantiate Database object and connect to actual database
 $database = new Database();
 $db = $database->connect();
+
 
 // Instantiate Admin object and give it connection to database
 $admin = new Admin($db);
@@ -41,3 +43,4 @@ if ($num > 0) {
         array('message' => 'No Addresses Found')
     ));
 }
+

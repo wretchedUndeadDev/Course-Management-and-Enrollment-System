@@ -4,6 +4,8 @@
         private $conn;
         private $crs_table = 'course';
         private $cls_table = 'class';
+        private $crsPrq_table = 'course_prereq';
+        private $crsArq_table = 'course_antireq';
 
         // Basic Properties - native to 'course' relation
         public $course_id;
@@ -53,7 +55,7 @@
         public function get_classes() {
             //Create query
             $query = 'SELECT * FROM '.$this->cls_table.' AS c
-                        WHERE c.parent_course_id = :cid'
+                        WHERE c.parent_course_id = :cid';
             
             //Preapare Statement
             $stmt = $this->conn->prepare($query);
@@ -71,6 +73,52 @@
             return $stmt;
         }
 
-        //Get course class days?
+        //Get course prereqs
+        //Input: course_id (as course object attribute)
+        public function get_prereqs() {
+            //Create query
+            $query = 'SELECT p.course_prereq_id, cp.course_name 
+                        FROM '.$this->crsPrq_table.' AS p, '.$this->crs_table.' AS cp
+                        WHERE p.requiring_course_id = :cid AND p.course_prereq_id = cp.course_id';
+
+            //Preapare Statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean Data
+            $this->course_id = htmlspecialchars(strip_tags($this->course_id));
+
+            //Bind Data
+            $stmt->bindParam(':cid', $this->course_id);
+
+            //Execute
+            $stmt->execute();
+
+            // Return statement (corresponding api call will handle the result)
+            return $stmt;
+        }
+
+        //Get course antireqs
+        //Input: course_id (as course object attribute)
+        public function get_antireqs() {
+            //Create query
+            $query = 'SELECT p.course_antireq_id, cp.course_name 
+                        FROM '.$this->crsArq_table.' AS p, '.$this->crs_table.' AS cp
+                        WHERE p.requiring_course_id = :cid AND p.course_antireq_id = cp.course_id';
+
+            //Preapare Statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean Data
+            $this->course_id = htmlspecialchars(strip_tags($this->course_id));
+
+            //Bind Data
+            $stmt->bindParam(':cid', $this->course_id);
+
+            //Execute
+            $stmt->execute();
+
+            // Return statement (corresponding api call will handle the result)
+            return $stmt;
+        }
 
     }

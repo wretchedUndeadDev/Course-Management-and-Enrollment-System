@@ -21,6 +21,8 @@
             print_r($a->season);
         }
         */
+
+        
         
         foreach ($student_enrolled_terms as $selected_term) {
             $term_button_name = $selected_term->year."_".$selected_term->season;
@@ -33,11 +35,7 @@
                 }
                 */
 
-                
-
                 $student_enrolled_courses_for_selected_term = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term_crs.php?student_id='.$student_id.'&term_year='.$selected_term->year.'&term_season='.$selected_term->season.''));
-
-                
 
                 //DEBUGGING
                 /*
@@ -178,6 +176,11 @@
                 border-radius: .5vw;
             }
 
+
+            .inlineForm {
+                display:inline!important;
+            }
+
             /*Content-Responsivness*/
             .responsiveText {
                 font-size: 1.2vw;
@@ -271,11 +274,38 @@
                                                 <td><?php echo $course_data->course_level ?></td>
                                                 <td><?php echo $course_data->course_credit ?></td>
                                                 <td>
-                                                    <span>
-                                                        <button class="btn btn-primary">Details</button>
-                                                        <button class="btn btn-warning">Edit</button>
-                                                        <button class="btn btn-danger">Drop</button>
-                                                    </span>
+                                                    <form method="POST" action="<?php echo ROOT_URL.'pages/student/studentEnrolledCourseInfo.php' ?>">
+                                                        <span>
+                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/enrolledCourseInfo.php'?>">
+                                                                <input type="submit"
+                                                                    class="btn btn-primary"
+                                                                    value="Details"
+                                                                >
+                                                                </input>
+                                                                <input type="hidden"
+                                                                    name="Details"
+                                                                    value="<?php echo $course_data->course_id?>"
+                                                                >
+                                                                </input>
+                                                            </form>
+                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/enrolledCourseEdit'?>">
+                                                                <input type="submit"
+                                                                    name="<?php echo $course_data->course_id.' Edit' ?>"
+                                                                    class="btn btn-warning"
+                                                                    value="Edit"
+                                                                >
+                                                                </input>
+                                                            </form>
+                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/enrolledCourseDrop.php'?>">
+                                                                <input type="submit"
+                                                                    name="<?php echo $course_data->course_id.' Drop' ?>"
+                                                                    class="btn btn-danger"
+                                                                    value="Drop"
+                                                                >
+                                                                </input>
+                                                            </form>
+                                                        </span>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
