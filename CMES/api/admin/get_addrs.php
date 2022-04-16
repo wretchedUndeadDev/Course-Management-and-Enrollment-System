@@ -5,14 +5,16 @@ header('Content-Type: application/json');
 
 //Get Database Class
 include_once '../../config/Database.php';
-//Get Student Class
+
+//Get Admin Class
 include_once '../../models/Admin.php';
 
 // Instantiate Database object and connect to actual database
 $database = new Database();
 $db = $database->connect();
 
-// Instantiate Student object and give it connection to database
+
+// Instantiate Admin object and give it connection to database
 $admin = new Admin($db);
 
 //Get student_id from url and set student objects student_id attribute to it
@@ -41,3 +43,4 @@ if ($num > 0) {
         array('message' => 'No Addresses Found')
     ));
 }
+

@@ -26,4 +26,6 @@ $result_arr = array(
 );
 
 //return Json ( retrieved from calling webpage via file_get_contents() )
+
 print_r(json_encode($result_arr));
+
