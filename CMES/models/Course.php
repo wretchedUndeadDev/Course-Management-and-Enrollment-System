@@ -73,6 +73,61 @@
             return $stmt;
         }
 
+
+        //Get avaialable classes of a certain type
+        //Input: course_id (as course object attribute), class type
+        public function get_avlbl_class($type) {
+            //Create query
+            $query = 'SELECT * FROM '.$this->cls_table.' AS c
+                        WHERE c.parent_course_id = :cid
+                            AND c.class_type = \''.$type.'\'
+                            AND c.seat_num > 0';
+            
+            //Preapare Statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean Data
+            $this->course_id = htmlspecialchars(strip_tags($this->course_id));
+
+            //Bind Data
+            $stmt->bindParam(':cid', $this->course_id);
+
+            //Execute
+            $stmt->execute();
+
+            // Return statement (corresponding api call will handle the result)
+            return $stmt;
+        }
+
+        //Get days for a courses class
+        //Input: course_id (as course object attribute), class number
+        public function get_crs_cls_days($class_num) {
+            //Create query
+            $query = 'SELECT cd.day 
+                        FROM class_days AS cd
+                        WHERE cd.parent_course_id = :cid
+                            AND cd.class_num = :cn';
+            
+            //Preapare Statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean Data
+            $this->course_id = htmlspecialchars(strip_tags($this->course_id));
+            $class_num = htmlspecialchars(strip_tags($class_num));
+
+            //Bind Data
+            $stmt->bindParam(':cid', $this->course_id);
+            $stmt->bindParam(':cn', $class_num);
+
+            //Execute
+            $stmt->execute();
+
+            // Return statement (corresponding api call will handle the result)
+            return $stmt;
+        }
+
+
+
         //Get course prereqs
         //Input: course_id (as course object attribute)
         public function get_prereqs() {

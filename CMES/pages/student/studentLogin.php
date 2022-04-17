@@ -33,14 +33,6 @@
             setcookie("student_id", $student_data->student_id, time()+3600);
 
             header('Location: '.ROOT_URL.'pages/student/studentHome.php');
-
-
-
-
-
-
-
-
         }
     }
 ?>
@@ -169,7 +161,7 @@
                                 <input type="text" name="student_id" class="form-control">
                             </div>
                             <br>
-                            <a href=<?php echo HOME_PAGE_LINK; ?>>
+                            <a href=<?php echo ROOT_URL.'pages/index.php' ?>>
                                 <button id ="backButton" type="button" class="btn btn-primary">Back</button>
                             </a>
                             <button id="loginButton" name="login" type="submit" class="btn btn-primary">Login</button>

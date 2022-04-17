@@ -199,7 +199,7 @@
         //Input: student_id (as student object attribute), term_year, term_season
         public function get_enrld_term_crs($term_year, $term_season) {
             //Create query
-            $query = 'SELECT t.course_id 
+            $query = 'SELECT DISTINCT t.course_id 
                         FROM term AS t, '.$this->scce_table.' AS scce
                         WHERE t.course_id = scce.enrolled_course_id AND scce.enrolling_student_id = :sid AND t.year = :y AND t.season = :s';
 

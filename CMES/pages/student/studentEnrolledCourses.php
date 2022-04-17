@@ -7,9 +7,10 @@
 
         //Call API and get student's enrolled terms
         $student_enrolled_terms = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term.php?student_id='.$student_id.''));
-        //Load in first term courses by default
-        $student_enrolled_courses_for_selected_term = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term_crs.php?student_id='.$student_id.'&term_year='.$student_enrolled_terms[0]->year.'&term_season='.$student_enrolled_terms[0]->season.''));
-    
+        //Load in first term and its courses by default
+        $student_selected_term = $student_enrolled_terms[0];
+        $student_enrolled_courses_for_selected_term = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term_crs.php?student_id='.$student_id.'&term_year='.$student_selected_term->season.''));
+
         //DEBUGGING
         /*
         echo "<pre>";
@@ -21,12 +22,13 @@
             print_r($a->season);
         }
         */
-
         
         
-        foreach ($student_enrolled_terms as $selected_term) {
-            $term_button_name = $selected_term->year."_".$selected_term->season;
+        foreach ($student_enrolled_terms as $term) {
+            $term_button_name = $term->year."_".$term->season;
             if (array_key_exists($term_button_name, $_POST)) {
+
+                $student_selected_term = $term;
 
                 //DEBUGGING
                 /*
@@ -35,7 +37,7 @@
                 }
                 */
 
-                $student_enrolled_courses_for_selected_term = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term_crs.php?student_id='.$student_id.'&term_year='.$selected_term->year.'&term_season='.$selected_term->season.''));
+                $student_enrolled_courses_for_selected_term = json_decode(file_get_contents(ROOT_URL.'api/student/get_enrld_term_crs.php?student_id='.$student_id.'&term_year='.$term->year.'&term_season='.$term->season.''));
 
                 //DEBUGGING
                 /*
@@ -251,7 +253,19 @@
                     <!--COURSE SELECTION CARD-->
                     <div id="courseSelectionCard" class="card text-white bg-success mb-3">
                         <div class="card-header">
-                            <h4 class="responsiveTitle">&lt;Selected_Term&gt;</h4>
+                            <h4 class="responsiveTitle">
+                                <?php 
+                                    if ($student_selected_term->season == 'F') {
+                                        echo "Fall ".$term->year;
+                                    } elseif ($student_selected_term->season == 'W') {
+                                        echo "Winter ".$term->year;
+                                    } elseif ($student_selected_term->season == 'Sum') {
+                                        echo "Summer ".$term->year;
+                                    } elseif ($student_selected_term->season == 'Spr') {
+                                        echo "Spring ".$term->year;
+                                    }
+                                ?>
+                            </h4>
                         </div>
                         <div class="card-body">
                             <div class="tableFixedHead">
@@ -276,7 +290,7 @@
                                                 <td>
                                                     <form method="POST" action="<?php echo ROOT_URL.'pages/student/studentEnrolledCourseInfo.php' ?>">
                                                         <span>
-                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/enrolledCourseInfo.php'?>">
+                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/studentEnrolledCourseInfo.php'?>">
                                                                 <input type="submit"
                                                                     class="btn btn-primary"
                                                                     value="Details"
@@ -288,15 +302,19 @@
                                                                 >
                                                                 </input>
                                                             </form>
-                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/enrolledCourseEdit'?>">
+                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/studentEnrolledCourseEdit.php'?>">
                                                                 <input type="submit"
                                                                     name="<?php echo $course_data->course_id.' Edit' ?>"
                                                                     class="btn btn-warning"
                                                                     value="Edit"
                                                                 >
                                                                 </input>
+                                                                <input type="hidden"
+                                                                    name="Edit"
+                                                                    value="<?php echo $course_data->course_id?>">
+                                                                </input>
                                                             </form>
-                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/enrolledCourseDrop.php'?>">
+                                                            <form class="inlineForm" method="POST" action="<?php echo ROOT_URL.'pages/student/studentEnrolledCourseDrop.php'?>">
                                                                 <input type="submit"
                                                                     name="<?php echo $course_data->course_id.' Drop' ?>"
                                                                     class="btn btn-danger"

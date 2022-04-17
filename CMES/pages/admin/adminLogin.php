@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
     $Lname = $_POST['Lname'];
 
     //call api
-    $admin_data = json_decode(file_get_contents(ROOT_URL . 'api/admin/login.php?admin_id=' . $admin_id . '&Lname=' . $Lname));
+    $admin_data = json_decode(file_get_contents(ROOT_URL.'api/admin/login.php?admin_id='.$admin_id.'&Lname='.$Lname));
 
     //DEBUGGING
     //print_r($admin_data->admin_id);
@@ -31,7 +31,7 @@ if (isset($_POST['login'])) {
         //Create admin Cookie (This will be used by all following admin pages)
         setcookie("admin_id", $admin_data->admin_id, time() + 3600);
 
-        header('Location: ' . ROOT_URL . 'pages/admin/adminHome.php');
+        header('Location: '.ROOT_URL.'pages/admin/adminHome.php');
     }
 }
 ?>
